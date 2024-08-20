@@ -8,6 +8,7 @@ import NotFound from "./page/website/Home/NotFound/NotFound";
 import LayoutClient from "./page/website/LayoutClient";
 const routeConfig = [
   {
+    // Router
     path: "/",
     element: <LayoutClient />,
     children: [
