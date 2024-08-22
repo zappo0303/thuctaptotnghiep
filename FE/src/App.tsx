@@ -22,7 +22,7 @@ const routeConfig = [
     ),
     children: [
       {
-        // path: "products",
+        path: "products",
         // element: <ListProducts />,
       },
 

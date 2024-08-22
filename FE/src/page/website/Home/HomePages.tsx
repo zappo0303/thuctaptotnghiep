@@ -1,10 +1,13 @@
+import { Container } from "@mui/material"
 import Banner from "./Banner/Banner"
+import ProductList from "./products/ProductsList"
 
 const HomePages = () => {
     return (
-        <div className="container">
+        <Container maxWidth="xl">
             <Banner />
-        </div>
+            <ProductList />
+        </Container>
     )
 }
 
