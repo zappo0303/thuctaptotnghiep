@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import NotFound from "./page/website/Home/NotFound/NotFound";
 import LayoutClient from "./page/website/LayoutClient";
 import HomePages from "./page/website/Home/HomePages";
+import CategoryList from "./page/website/Home/Category/CategoryList";
 const routeConfig = [
   {
     // Router
@@ -11,7 +12,7 @@ const routeConfig = [
     element: <LayoutClient />,
     children: [
       { path: "/", element: <HomePages /> },
-      // { path: "products", element: <HomePage /> },
+      { path: "category/:id", element: <CategoryList /> },
       { path: "*", element: <NotFound /> },
     ],
   },
