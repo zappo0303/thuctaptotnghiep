@@ -20,3 +20,13 @@ export const getProductById = async (id?: number | string) => {
         toast.error("Lỗi khi lấy thông tin sản phẩm từ server");
     }
 };
+
+export const updateProductFeaturedStatus = async (id: string, featured: boolean) => {
+    try {
+        const response = await axiosInstance.patch(`/api/products/${id}/featured`, { featured });
+        return response.data;
+    } catch (error) {
+        console.error("Error updating product featured status:", error);
+        toast.error("Lỗi khi cập nhật trạng thái nổi bật của sản phẩm");
+    }
+};

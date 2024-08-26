@@ -5,6 +5,7 @@ import NotFound from "./page/website/Home/NotFound/NotFound";
 import LayoutClient from "./page/website/LayoutClient";
 import HomePages from "./page/website/Home/HomePages";
 import CategoryList from "./page/website/Home/Category/CategoryList";
+import ProductDetail from "./page/website/Home/products/ProductsDetail";
 const routeConfig = [
   {
     // Router
@@ -13,6 +14,8 @@ const routeConfig = [
     children: [
       { path: "/", element: <HomePages /> },
       { path: "category/:id", element: <CategoryList /> },
+      { path: "product/:id", element: <ProductDetail /> },
+      { path: "category/:id/product/:id", element: <ProductDetail /> },
       { path: "*", element: <NotFound /> },
     ],
   },
