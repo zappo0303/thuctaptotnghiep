@@ -8,6 +8,9 @@ import CategoryList from "./page/website/Home/Category/CategoryList";
 import ProductDetail from "./page/website/Home/products/ProductsDetail";
 import Singin from "./page/website/auth/Signin";
 import Singup from "./page/website/auth/Signup";
+import LayoutAdmin from "./page/dashboard/Layout/LayoutAdmin";
+import AdminProductList from "./page/dashboard/products/ListProducts";
+import ProductAdd from "./page/dashboard/products/ProductAdd";
 const routeConfig = [
   {
     // Router
@@ -26,12 +29,16 @@ const routeConfig = [
   {
     path: "/admin",
     element: (
-      <></>
+      <LayoutAdmin />
     ),
     children: [
       {
         path: "products",
-        // element: <ListProducts />,
+        element: <AdminProductList />
+      },
+      {
+        path: "productAdd",
+        element: <ProductAdd />,
       },
 
       { path: "*", element: <NotFound /> },

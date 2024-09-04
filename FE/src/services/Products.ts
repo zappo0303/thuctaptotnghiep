@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import axiosInstance from "../config/Axios";
+import { IdProducts } from "@/interfaces/Products";
 
 export const getAllProducts = async () => {
     try {
@@ -21,6 +22,38 @@ export const getProductById = async (id?: number | string) => {
     }
 };
 
+export const addProduct = async (product: IdProducts) => {
+    try {
+        const response = await axiosInstance.post("/api/products", product);
+        return response.data;
+    } catch (error) {
+        console.error("Error adding product:", error);
+        toast.error("Lỗi khi thêm sản phẩm");
+    }
+};
+
+export const deleteProduct = async (id?: number | string) => {
+    try {
+        const response = await axiosInstance.delete(`/api/products/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        toast.error("Lỗi khi xóa sản phẩm");
+    }
+};
+
+export const updateProduct = async (product: IdProducts) => {
+    try {
+        const response = await axiosInstance.put(
+            `/api/products/${product._id}`,
+            product
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Error updating product:", error);
+        toast.error("Lỗi khi cập nhật sản phẩm");
+    }
+};
 export const updateProductFeaturedStatus = async (id: string, featured: boolean) => {
     try {
         const response = await axiosInstance.patch(`/api/products/${id}/featured`, { featured });
