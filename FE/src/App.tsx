@@ -11,6 +11,7 @@ import Singup from "./page/website/auth/Signup";
 import LayoutAdmin from "./page/dashboard/Layout/LayoutAdmin";
 import AdminProductList from "./page/dashboard/products/ListProducts";
 import ProductAdd from "./page/dashboard/products/ProductAdd";
+import ProductEdit from "./page/dashboard/products/ProductEdit";
 const routeConfig = [
   {
     // Router
@@ -39,6 +40,10 @@ const routeConfig = [
       {
         path: "productAdd",
         element: <ProductAdd />,
+      },
+      {
+        path: "product/edit/:id",
+        element: <ProductEdit />,
       },
 
       { path: "*", element: <NotFound /> },
