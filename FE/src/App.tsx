@@ -12,6 +12,9 @@ import LayoutAdmin from "./page/dashboard/Layout/LayoutAdmin";
 import AdminProductList from "./page/dashboard/products/ListProducts";
 import ProductAdd from "./page/dashboard/products/ProductAdd";
 import ProductEdit from "./page/dashboard/products/ProductEdit";
+import AdminCategoryList from "./page/dashboard/category/ListCategory";
+import AddCategory from "./page/dashboard/category/AddCategory";
+import EditCategory from "./page/dashboard/category/EditCategory";
 const routeConfig = [
   {
     // Router
@@ -44,6 +47,18 @@ const routeConfig = [
       {
         path: "product/edit/:id",
         element: <ProductEdit />,
+      },
+      {
+        path: "category",
+        element: <AdminCategoryList />,
+      },
+      {
+        path: "category/add",
+        element: <AddCategory />,
+      },
+      {
+        path: "category/edit/:id",
+        element: <EditCategory />,
       },
 
       { path: "*", element: <NotFound /> },
