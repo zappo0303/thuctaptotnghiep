@@ -15,6 +15,7 @@ import ProductEdit from "./page/dashboard/products/ProductEdit";
 import AdminCategoryList from "./page/dashboard/category/ListCategory";
 import AddCategory from "./page/dashboard/category/AddCategory";
 import EditCategory from "./page/dashboard/category/EditCategory";
+import Checkout from "./page/website/Home/Cart/Order";
 const routeConfig = [
   {
     // Router
@@ -28,6 +29,10 @@ const routeConfig = [
       { path: "signin", element: <Singin /> },
       { path: "signup", element: <Singup /> },
       { path: "*", element: <NotFound /> },
+      {
+        path: "checkOut",
+        element: <Checkout />,
+      },
     ],
   },
   {
