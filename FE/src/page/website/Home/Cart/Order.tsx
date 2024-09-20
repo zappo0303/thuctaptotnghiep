@@ -194,8 +194,8 @@ const Checkout: React.FC = () => {
 
     if (!data || !data.products.length) {
         return (
-            <div className="flex justify-center items-center h-1/2">
-                <p className="text-red-500">Không có sản phẩm trong giỏ hàng.</p>
+            <div className="flex justify-center items-center h-[60vh]">
+                <p className="text-red-500 ">Không có sản phẩm trong giỏ hàng.</p>
             </div>
         );
     }

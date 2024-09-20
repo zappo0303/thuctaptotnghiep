@@ -6,12 +6,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { logout } from "../services/Auth/Auth";
+import { Badge, IconButton } from "@mui/material";
+import useCartsQuery from "../hook/useCartQuery";
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const storedUser = localStorage.getItem("user");
     const user = storedUser ? JSON.parse(storedUser) : null;
-
+    const { data } = useCartsQuery(user?._id);
     const handleLogout = () => {
         logout();
         handleClose();
@@ -24,6 +26,7 @@ const Header = () => {
     const handleClose = () => {
         setMenuOpen(false);
     };
+    const productsCount = data?.products?.length || 0;
 
     return (
         <header className="bg-black text-white">
@@ -59,9 +62,21 @@ const Header = () => {
                             <SearchIcon />
                         </div>
 
-                        <button className="relative">
-                            <ShoppingCartIcon />
-                        </button>
+                        <Link to="/checkOut" style={{ color: "inherit", textDecoration: "none" }}>
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                color="inherit"
+                                aria-label="open shopping cart"
+                                aria-controls="menu-cart"
+                                aria-haspopup="true"
+                                sx={{ mr: 2 }}
+                            >
+                                <Badge badgeContent={productsCount} color="error">
+                                    <ShoppingCartIcon />
+                                </Badge>
+                            </IconButton>
+                        </Link>
 
                         <button className="relative">
                             <NotificationsIcon />

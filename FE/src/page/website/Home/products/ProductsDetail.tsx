@@ -4,33 +4,27 @@ import ImgProductDetail from "./ImgProductsDetail";
 import { formatCurrencyVND } from "../../../../services/VND/vnd";
 import useProductQuerry from "../../../../hook/useProductQuerry";
 import NotFound from "../NotFound/NotFound";
-import { FaPlus, FaMinus } from "react-icons/fa";  // Import icons
-import StarIcon from "@mui/icons-material/Star";
-import { IconButton, Rating } from "@mui/material";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import { FaPlus, FaMinus, FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { updateProductFeaturedStatus } from "../../../../services/Products";
+import useCartMutation from "../../../../hook/useCartMutation";
+import { Button, styled } from "@mui/material";
 
-const labels = {
-    0.5: "Useless",
-    1: "Useless+",
-    1.5: "Poor",
-    2: "Poor+",
-    2.5: "Ok",
-    3: "Ok+",
-    3.5: "Good",
-    4: "Good+",
-    4.5: "Excellent",
-    5: "Excellent+",
-};
-
-const value = 4.5; // Giá trị đánh giá mặc định
+const AddCartButton = styled(Button)({
+    width: 250,
+    height: 64,
+    fontSize: 20,
+    fontWeight: 400,
+    borderRadius: 15,
+    border: "1px solid black",
+});
 
 const ProductDetail = () => {
     const [isFeatured, setIsFeatured] = useState(false);
     const { id } = useParams();
     const { data: product, isLoading, refetch } = useProductQuerry(id);
     const [quantity, setQuantity] = useState(1);
+    const { mutate } = useCartMutation({ action: "CREATE" });
 
     useEffect(() => {
         if (product) {
@@ -63,22 +57,31 @@ const ProductDetail = () => {
         setQuantity(value);
     };
 
+    const userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
+    if (!userId) return toast.error("Bạn chưa đăng nhập !!");
+
     const productId = product._id;
 
-    const toggleFeatured = async () => {
+    // Không muốn hiển thị thông báo khi toggle yêu thích
+    const toggleFeatured = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();  // Ngăn việc form bị submit khi nhấn vào nút yêu thích
         try {
             const updatedProduct = await updateProductFeaturedStatus(productId, !isFeatured);
             setIsFeatured(updatedProduct.featured);
-            // Làm mới dữ liệu sản phẩm để đảm bảo dữ liệu là mới nhất
             await refetch();
         } catch (error) {
             toast.error('Cập nhật trạng thái sản phẩm thất bại!');
         }
     };
 
+    const handleAddToCart = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        await mutate({ userId, productId, quantity });
+    };
+
     return (
         <div className=" max-w-7xl mx-auto mt-5 ">
-            <form>
+            <form onSubmit={handleAddToCart}>
                 <div className="grid grid-cols-2 gap-20 p-5">
                     <div className="flex justify-between items-center ">
                         <div className="w-1/4">
@@ -99,39 +102,37 @@ const ProductDetail = () => {
                         </div>
                     </div>
                     <div>
-                        <div className="text-4xl font-light flex items-center mb-4"> {/* Thêm mb-4 để tạo khoảng cách dưới */}
+                        <div className="text-4xl font-light flex items-center mb-4">
                             {product.name}
-                            <IconButton
-                                onClick={toggleFeatured}
-                                sx={{ color: isFeatured ? "red" : "gray", ml: 2 }}
+                            <button
+                                onClick={toggleFeatured}  // Không kích hoạt form submit
+                                className="ml-4"
                             >
-                                {isFeatured ? <Favorite /> : <FavoriteBorder />}
-                            </IconButton>
+                                {isFeatured ? (
+                                    <FaHeart className="text-red-500" />
+                                ) : (
+                                    <FaRegHeart className="text-gray-500" />
+                                )}
+                            </button>
                         </div>
-                        <div className="text-2xl font-medium text-black my-4"> {/* Thêm my-4 để tạo khoảng cách trên và dưới */}
+                        <div className="text-2xl font-medium text-black my-4">
                             {product.discount > 0
                                 ? formatCurrencyVND(product.price * (1 - product.discount / 100))
                                 : formatCurrencyVND(product.price)}
                         </div>
-                        <div className="flex items-center w-[230px] mb-4"> {/* Thêm mb-4 để tạo khoảng cách dưới */}
+                        <div className="flex items-center w-[230px] mb-4">
                             <div className="flex items-center">
-                                <Rating
-                                    name="text-feedback"
-                                    value={value}
-                                    readOnly
-                                    precision={0.5}
-                                    emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-                                />
+                                <FaStar className="text-yellow-400" />
+                                <span className="ml-2">4.5/5</span>
                             </div>
-                            <div className="text-lg text-black ml-2">{labels[value]}</div>
                         </div>
-                        <div className="text-lg font-light my-4 w-[500px] text-black"> {/* Thêm my-4 để tạo khoảng cách trên và dưới */}
+                        <div className="text-lg font-light my-4 w-[500px] text-black">
                             {product.description}
                         </div>
-                        <div className="text-lg font-light text-gray-500 mt-4"> {/* Thêm mt-4 để tạo khoảng cách trên */}
+                        <div className="text-lg font-light text-gray-500 mt-4">
                             {product.size}
                         </div>
-                        <div className="flex items-center mt-4"> {/* Thêm mt-4 để tạo khoảng cách trên */}
+                        <div className="flex items-center mt-4">
                             <div className="text-lg font-light my-2">Quantity:</div>
                             <button
                                 type="button"
@@ -155,16 +156,10 @@ const ProductDetail = () => {
                                 <FaPlus />
                             </button>
                         </div>
-                        <div className="pt-4 pb-6 border-b border-gray-300 grid grid-cols-3 gap-2 mt-4"> {/* Thêm mt-4 để tạo khoảng cách trên */}
-                            <button
-                                type="submit"
-                                className="w-[250px] h-16 text-lg font-medium rounded-xl border border-black bg-blue-500 text-white"
-                            >
-                                Add to Cart
-                            </button>
-                        </div>
+                        <AddCartButton type="submit" variant="contained">
+                            Add to Cart
+                        </AddCartButton>
                     </div>
-
                 </div>
             </form>
         </div>
