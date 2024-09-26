@@ -17,7 +17,7 @@ type Order = {
     };
 };
 
-const OrderPage = () => {
+const OrderList = () => {
     const storedUser = localStorage.getItem("user");
     const user = storedUser ? JSON.parse(storedUser) : null;
     const userId = user?._id;
@@ -124,4 +124,4 @@ const OrderPage = () => {
     );
 };
 
-export default OrderPage;
+export default OrderList;

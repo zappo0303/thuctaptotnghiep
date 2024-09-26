@@ -16,6 +16,8 @@ import AdminCategoryList from "./page/dashboard/category/ListCategory";
 import AddCategory from "./page/dashboard/category/AddCategory";
 import EditCategory from "./page/dashboard/category/EditCategory";
 import Checkout from "./page/website/Home/Cart/Order";
+import OrderDetail from "./page/dashboard/order/OrderDetails";
+import OrderList from "./page/dashboard/order/OrderList";
 const routeConfig = [
   {
     // Router
@@ -64,6 +66,14 @@ const routeConfig = [
       {
         path: "category/edit/:id",
         element: <EditCategory />,
+      },
+      {
+        path: "orders/:userId/:orderId",
+        element: <OrderDetail />,
+      },
+      {
+        path: "order",
+        element: <OrderList />,
       },
 
       { path: "*", element: <NotFound /> },
