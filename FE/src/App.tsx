@@ -18,6 +18,7 @@ import EditCategory from "./page/dashboard/category/EditCategory";
 import Checkout from "./page/website/Home/Cart/Order";
 import OrderDetail from "./page/dashboard/order/OrderDetails";
 import OrderList from "./page/dashboard/order/OrderList";
+import { AuthProvider } from "./services/Auth/AuthContext";
 const routeConfig = [
   {
     // Router
@@ -84,7 +85,9 @@ function App() {
   const routers = useRoutes(routeConfig);
   return (
     <>
-      {routers}
+      <AuthProvider>
+        {routers}
+      </AuthProvider>
     </>
   );
 }

@@ -6,11 +6,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { logout } from "../../services/Auth/Auth";
+import { Avatar, IconButton } from "@mui/material";
 
 const HeaderAdmin = () => {
+
     const [menuOpen, setMenuOpen] = useState(false);
     const storedUser = localStorage.getItem("user");
     const user = storedUser ? JSON.parse(storedUser) : null;
+    // console.log(user);
 
     const handleLogout = () => {
         logout();
@@ -58,17 +61,24 @@ const HeaderAdmin = () => {
                         <div className="relative">
                             {user ? (
                                 <div>
-                                    <button
-                                        className="focus:outline-none"
+                                    <IconButton
+                                        size="large"
+                                        edge="end"
+                                        color="inherit"
                                         aria-label="account of current user"
                                         onClick={handleClick}
                                     >
-                                        <img
-                                            className=" border-gray-400"
+                                        <Avatar
                                             alt={user?.name}
                                             src={user?.avatar}
+                                            sx={{
+                                                width: 32,
+                                                height: 32,
+                                                padding: "0 !important",
+                                                border: "1px solid gray",
+                                            }}
                                         />
-                                    </button>
+                                    </IconButton>
                                     {menuOpen && (
                                         <div
                                             className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg z-50"
@@ -83,13 +93,6 @@ const HeaderAdmin = () => {
                                                         onClick={handleLogout}
                                                     >
                                                         Log out
-                                                    </button>
-                                                </Link>
-                                                <Link to="/products/liked">
-                                                    <button
-                                                        className="w-full mt-2 bg-black text-white py-2 rounded-md hover:bg-opacity-80"
-                                                    >
-                                                        Liked
                                                     </button>
                                                 </Link>
                                             </div>
