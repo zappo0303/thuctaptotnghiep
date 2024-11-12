@@ -19,6 +19,7 @@ import Checkout from "./page/website/Home/Cart/Order";
 import OrderDetail from "./page/dashboard/order/OrderDetails";
 import OrderList from "./page/dashboard/order/OrderList";
 import { AuthProvider } from "./services/Auth/AuthContext";
+import ProductsLiked from "./page/website/Home/products/ProductsLiked";
 const routeConfig = [
   {
     // Router
@@ -31,6 +32,7 @@ const routeConfig = [
       { path: "category/:id/product/:id", element: <ProductDetail /> },
       { path: "signin", element: <Singin /> },
       { path: "signup", element: <Singup /> },
+      { path: "products/Liked", element: <ProductsLiked /> },
       { path: "*", element: <NotFound /> },
       {
         path: "checkOut",

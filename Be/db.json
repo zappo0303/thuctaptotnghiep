@@ -1,5 +1,6 @@
 {
-    "products": [{
+    "products": [
+        {
             "category": "Lolito",
             "name": "Luxury big sofa",
             "price": 7000000,
@@ -10,7 +11,6 @@
                 "https://picsum.photos/id/12/300/300"
             ],
             "description": "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound."
-
         },
         {
             "category": "Syltherine",
